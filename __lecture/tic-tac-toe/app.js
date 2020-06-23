@@ -20,8 +20,7 @@ let currentPlayer = '1';
 player1.classList.add('active');
 
 const handleRestart = () => {
-  // reload the page
-  // feels like cheating but it WILL reset the game
+  location.reload();
 };
 
 const toggleRestartBtn = () => {
@@ -29,20 +28,43 @@ const toggleRestartBtn = () => {
 };
 
 const win = () => {
-  // stop board from being clickable
-  // print the winner to the screen
-  // activate the restart btn
+  board.removeEventListener('click', handleClick);
+  const winner = `Player ${currentPlayer} WINS!`;
+  const endMess = document.querySelector('.js-end-message');
+  endMess.innerText = winner;
+   // activate the restart btn
 };
 
 const verifyWin = () => {
-  // Use the game array to determine the winner.
+  if (COUNTER > 3) {
+    // ROWS
+    if (game[0] === game[1] && game[1] === game[2]) win();
+    if (game[3] === game[4] && game[4] === game[5]) win();
+    if (game[6] === game[7] && game[7] === game[8]) win();
+    // COLUMNS
+    if (game[0] === game[3] && game[3] === game[6]) win();
+    if (game[1] === game[4] && game[4] === game[7]) win();
+    if (game[2] === game[5] && game[5] === game[8]) win();
+    // DIAGONALS
+    if (game[0] === game[4] && game[4] === game[8]) win();
+    if (game[2] === game[4] && game[4] === game[6]) win();
+  }
 };
 
 const togglePlayer = () => {
-  // use .active to show active player visually...
+  (COUNTER % 2 === 0) ? currentPlayer = '1' : currentPlayer = '2';
+  if (currentPlayer === '1') {
+    player1.classList.remove('active');
+    player2.classList.add('active');
+  } else {
+    player2.classList.remove('active');
+    player1.classList.add('active');
+  }
 };
 
 const handleClick = (event) => {
+  console.log(currentPlayer);
+
   const cell = event.target.id;
   const currentCellDiv = document.getElementById(cell);
   const cellId = cell.charAt(cell.length - 1);
@@ -50,8 +72,10 @@ const handleClick = (event) => {
 
   if (typeof game[cellId] === 'number') {
     currentCellDiv.innerText = icon;
-
-    // so much missing here...
+    COUNTER++;
+    game[cellId] = icon;
+    verifyWin();
+    togglePlayer();
   }
 };
 
