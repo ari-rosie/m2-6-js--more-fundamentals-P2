@@ -48,3 +48,13 @@ const staffMembers = [
     },
   },
 ];
+
+const getSkillStaff = (arr, lang, prof) => {
+  return arr.filter(staff => {
+    return (staff.skillLevels[lang] >= prof);
+  })
+}
+
+console.log(getSkillStaff(staffMembers, 'javascript', 6));
+
+
