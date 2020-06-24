@@ -17,34 +17,42 @@ const people = [
 // Write a function that returns the average age of the `people` array.
 
 function avgAge(peopleArr) {
-  // return something
+  let total = 0;
+  return Math.round(people.reduce(function (total, age) {
+    return total + age.age;
+  }, total) / peopleArr.length);
 }
 
 console.log(`Average age is ${avgAge(people)}.`);
 
-//-------------------------------------------------
+// //-------------------------------------------------
 
-// Exercise 9.2
-// ------------
-// Write a function that, when passed an array of *people* (person objects) as
-// an argument, returns an array of their full names (each full name is a string).
-// Can you make use of your `fullName` function here?
+// // Exercise 9.2
+// // ------------
+// // Write a function that, when passed an array of *people* (person objects) as
+// // an argument, returns an array of their full names (each full name is a string).
+// // Can you make use of your `fullName` function here?
 
 function fullName(peopleArr) {
-  // return something
+  let nameArr = [...peopleArr];
+  return nameArr.map(person => {
+    return Object.values(person.name).join(' ');
+  })
 }
 
 console.log(fullName(people));
 
-//-------------------------------------------------
+// //-------------------------------------------------
 
-// Exercise 9.3
-// ------------
-// Write a function that, when given *people* and an *age* as arguments,
-// returns an array of just the people that are older than the specified age.
+// // Exercise 9.3
+// // ------------
+// // Write a function that, when given *people* and an *age* as arguments,
+// // returns an array of just the people that are older than the specified age.
 
 function olderPeople(peopleArr, age) {
-  // return something
+  return peopleArr.filter(person => {
+    return person.age > 26;
+  })
 }
 
 console.log(olderPeople(people, 26));
