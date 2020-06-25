@@ -79,9 +79,57 @@ let inputData = {
 // ✅ ['can-blink-lights']
 // ⛔️ ['can-blink-lights', null]
 
-function transformData(data) {
-  // Your code here
+let keyArr = Object.keys(inputData);
+inputData.relationship = [];
+
+
+const superPowersArray = () => {
+  let superpowers = [];
+  keyArr.forEach(key => {
+    if (key.startsWith('superpower') && inputData[key])
+      superpowers.push(inputData[key]);
+  })
+  inputData.superpowers = superpowers;
 }
+
+const addingRelationship = (type, data) => {
+  let relValueArr = [];
+  keyArr.forEach(key => {
+    if (key.startsWith(type)){
+      relValueArr.push(data[key]);
+    }
+  }) 
+  let newRelationship = {
+    type: type,
+    name: relValueArr[0],
+    age: relValueArr[1],
+    status: relValueArr[2],
+    superpowers: relValueArr.slice(3)
+  }
+  data.relationship.push(newRelationship);
+
+} 
+
+function transformData(data) {
+  //address object
+  data.address = {
+    streetAddress: data.address1,
+    city: data.addressCity,
+    state: data.addressState,
+    country: data.addressCountry
+  } 
+
+  //superpowers array
+  superPowersArray();
+
+  //relationship object
+  addingRelationship('mother', inputData);
+  addingRelationship('bestFriend', inputData);
+  addingRelationship('girlfriend', inputData);
+  return data;
+
+}
+
 
 // `JSON.stringify` is used to "pretty-print" the output, so that it's easy
 // to see what it looks like, and debug any problems.
